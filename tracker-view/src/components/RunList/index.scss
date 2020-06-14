@@ -1,24 +1,70 @@
 .run-list-main {
-    display: flex;
-    height: 100vh;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
+  height: 100vh;
 }
 
 .filter-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
 }
 
 .run-list-item {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .current-run-info {
-    margin-left: 30px
+  margin-left: 30px;
+}
+
+.date-from {
+  margin: 10px 10px;
+}
+
+.date-to {
+  margin: 10px 10px;
+}
+
+.add-button {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}
+
+.run-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.distance-input {
+  margin-top: 5px;
+}
+
+.time-input {
+  margin-top: 5px;
+}
+
+.date-input {
+  margin-top: 5px;
+}
+
+.modal-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  margin: 6px;
+}
+
+.close-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
 }
