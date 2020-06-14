@@ -5,7 +5,7 @@ import "./index.scss";
 
 export const Login = () => {
   return (
-    <main classname="placeholder">
+    <main className="placeholder">
       <div className="enter-zone">
         <img src={BearFace} alt="" />
         <button className="login-button">Let me in</button>
