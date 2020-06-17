@@ -1,8 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { getAll, createJog } from "./src/controllers/controllers";
-// import { Hell } from "./src/models/db";
+import {
+  Sync,
+  createJog,
+  updateJog,
+  deleteJog,
+  createUser,
+  updateUser,
+  deleteUser,
+} from "./src/controllers/controllers";
 
 mongoose.connect("mongodb://localhost:27017/Evgeny", {
   useFindAndModify: false,
@@ -11,9 +18,13 @@ mongoose.connect("mongodb://localhost:27017/Evgeny", {
 const app = express();
 app.use(bodyParser());
 
-app.get("/test", getAll);
-
+app.get("/sync", Sync);
 app.post("/newJog", createJog);
+app.put("/updateJog", updateJog);
+app.delete("/deleteJog", deleteJog);
+app.post("/newUser", createUser);
+app.put("/updateUser", updateUser);
+app.delete("/deleteUser", deleteUser);
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");

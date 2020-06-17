@@ -10,9 +10,21 @@ const User = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  hashPassword: {
+  email: {
     type: Schema.Types.String,
     required: true,
+  },
+  phone: {
+    type: Schema.Types.String,
+    required: true,
+  },
+  role: {
+    type: Schema.Types.String,
+    required: true,
+    default: "user",
+  },
+  hashPassword: {
+    type: Schema.Types.String,
   },
 });
 
