@@ -9,6 +9,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
+  filterDate,
 } from "./src/controllers/controllers";
 
 mongoose.connect("mongodb://localhost:27017/Evgeny", {
@@ -23,6 +24,7 @@ app.post("/newJog", createJog);
 app.put("/updateJog", updateJog);
 app.delete("/deleteJog", deleteJog);
 app.post("/newUser", createUser);
+app.post("/filterDate", filterDate);
 app.put("/updateUser", updateUser);
 app.delete("/deleteUser", deleteUser);
 

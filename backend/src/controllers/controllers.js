@@ -94,3 +94,16 @@ export const updateUser = async (req, res) => {
     console.log(error);
   }
 };
+
+export const filterDate = async (req, res) => {
+  try {
+    const startDate = req.body.startDate;
+    const finishDate = req.body.finishDate;
+    const filteredData = await db.Jogs.find({
+      date: { $gte: `${startDate}`, $lte: `${finishDate}` },
+    }).sort({ date: 1 });
+    res.send(filteredData);
+  } catch (error) {
+    console.log(error);
+  }
+};
