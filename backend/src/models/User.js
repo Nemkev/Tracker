@@ -23,8 +23,9 @@ const User = new Schema({
     required: true,
     default: "user",
   },
-  hashPassword: {
+  password: {
     type: Schema.Types.String,
+    required: true,
   },
 });
 

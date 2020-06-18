@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const Jogs = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   distance: {
     type: Schema.Types.String,
     required: true,

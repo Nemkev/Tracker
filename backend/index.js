@@ -10,7 +10,10 @@ import {
   updateUser,
   deleteUser,
   filterDate,
+  login,
+  authenticateToken,
 } from "./src/controllers/controllers";
+import jwt from "jsonwebtoken";
 
 mongoose.connect("mongodb://localhost:27017/Evgeny", {
   useFindAndModify: false,
@@ -19,7 +22,7 @@ mongoose.connect("mongodb://localhost:27017/Evgeny", {
 const app = express();
 app.use(bodyParser());
 
-app.get("/sync", Sync);
+app.get("/sync", authenticateToken, Sync);
 app.post("/newJog", createJog);
 app.put("/updateJog", updateJog);
 app.delete("/deleteJog", deleteJog);
@@ -27,6 +30,19 @@ app.post("/newUser", createUser);
 app.post("/filterDate", filterDate);
 app.put("/updateUser", updateUser);
 app.delete("/deleteUser", deleteUser);
+app.post("/login", login);
+
+// const authenticateToken = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   const token = authHeader && authHeader.split(" ")[1];
+//   if (token === null) return res.sendStatus(401);
+
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     req.user = user;
+//     next();
+//   });
+// };
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
