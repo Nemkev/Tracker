@@ -16,10 +16,7 @@ export const Sync = async (req, res) => {
 
 export const createJog = async (req, res) => {
   try {
-    const userId = req.body.userId;
-    const date = req.body.date;
-    const time = req.body.time;
-    const distance = req.body.distance;
+    const { userId, date, time, distance } = req.body;
     const jog = await new db.Jogs({ userId, date, time, distance }).save();
     res.send(jog);
   } catch (error) {
@@ -39,10 +36,7 @@ export const deleteJog = async (req, res) => {
 
 export const updateJog = async (req, res) => {
   try {
-    const id = req.body.id;
-    const date = req.body.date;
-    const time = req.body.time;
-    const distance = req.body.distance;
+    const { id, date, time, distance } = req.body;
     const jog = await db.Jogs.findByIdAndUpdate(id, {
       date,
       time,
@@ -118,7 +112,9 @@ export const login = async (req, res) => {
     }
     const user = { email, password };
     const accessToken = generateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "7d",
+    });
     res.json({ checkUser, accessToken, refreshToken });
   } catch (error) {
     console.log(error);
