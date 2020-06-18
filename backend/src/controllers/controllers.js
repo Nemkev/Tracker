@@ -1,6 +1,8 @@
-require("dotenv").config();
+import dotenv from "dotenv";
 import db from "../models/db";
 import jwt from "jsonwebtoken";
+
+dotenv.config();
 
 export const Sync = async (req, res) => {
   try {
@@ -28,7 +30,7 @@ export const createJog = async (req, res) => {
 export const deleteJog = async (req, res) => {
   try {
     const id = req.body.id;
-    const jog = await db.Jogs.findByIdAndRemove(id);
+    await db.Jogs.findByIdAndRemove(id);
     res.send(true);
   } catch (error) {
     console.log(error);
@@ -71,7 +73,7 @@ export const createUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const id = req.body.id;
-    const user = await db.User.findByIdAndRemove(id);
+    await db.User.findByIdAndRemove(id);
     res.send(true);
   } catch (error) {
     console.log(error);
@@ -110,25 +112,14 @@ export const login = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    const user = await db.User.findOne({ email, password });
-    // console.log(password, 111);
-    // console.log(user.password, 222);
-    // const check = db.User.find({ email, password });
-    // console.log(check);
-    // if (!check) {
-    //   res.sendStatus(403);
-    // }
-    // if (user.password === password) {
-    //   return null;
-    // }
-    if (!user) {
+    const checkUser = await db.User.findOne({ email, password });
+    if (!checkUser) {
       res.sendStatus(403);
     }
-    res.json({ user });
-    // const user = { email };
-    // const accessToken = generateAccessToken(user);
-    // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-    // res.json({ accessToken, refreshToken });
+    const user = { email, password };
+    const accessToken = generateAccessToken(user);
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+    res.json({ checkUser, accessToken, refreshToken });
   } catch (error) {
     console.log(error);
   }
@@ -148,12 +139,6 @@ export const authenticateToken = (req, res, next) => {
 
 const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15min",
+    expiresIn: "40min",
   });
 };
-
-// const generateRefreshToken = (req, res) => {
-//   const refreshToken = req.body.token;
-//   if (refreshToken) return res.sendStatus(401);
-//   if()
-// };
