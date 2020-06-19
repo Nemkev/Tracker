@@ -10,19 +10,31 @@ import axios from "axios";
 import "./index.scss";
 
 export const RunList = () => {
-  const [{ distance, time, userJogs }, setState] = useReducer(
+  const [
+    { distance, time, userJogs, distanceUpdate, timeUpdate, id },
+    setState,
+  ] = useReducer(
     (s, a) => ({
       ...s,
       ...a,
     }),
-    { distance: "", time: "", userJogs: "" }
+    {
+      distance: "",
+      time: "",
+      userJogs: "",
+      distanceUpdate: "",
+      timeUpdate: "",
+      id: "",
+    }
   );
 
-  const [modalState, setModalState] = useState(false);
+  const [modalStateCreate, setModalStateCreate] = useState(false);
+  const [modalStateUpdate, setModalStateUpdate] = useState(false);
   const [startDate, setStartDate] = useState("");
-  const [filteredDate, setFilteredDate] = useState("");
+  const [jogDateUpdate, setJogDateUpdate] = useState("");
   const [finishDate, setFinishDate] = useState("");
   const [jogDate, setJogDate] = useState("");
+
   useEffect(() => {
     if (startDate.length !== 0 && finishDate.length !== 0) {
       const filterJogs = async () => {
@@ -58,7 +70,7 @@ export const RunList = () => {
       getJogs();
     }
   }, [startDate, finishDate]);
-  console.log(startDate, 111, finishDate, 222);
+
   const handleCreateJog = async (e) => {
     e.preventDefault();
     axios.post(
@@ -77,9 +89,41 @@ export const RunList = () => {
     );
   };
 
+  const handleDeleteJog = async (e) => {
+    e.preventDefault();
+    axios.delete("http://localhost:4000/deleteJog", {
+      headers: {
+        Authorization: `Bearer ${localStorage.accessToken}`,
+      },
+      data: {
+        id,
+      },
+    });
+  };
+
+  const handleUpdateJog = async (e) => {
+    e.preventDefault();
+    axios.put(
+      "http://localhost:4000/updateJog",
+      {
+        userId: localStorage.userId,
+        id,
+        time: timeUpdate,
+        distance: distanceUpdate,
+        date: jogDateUpdate,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.accessToken}`,
+        },
+      }
+    );
+  };
+
   const handleChangeStart = (date) => setStartDate(date);
   const handleChangeFinish = (date) => setFinishDate(date);
   const handleChangeJog = (date) => setJogDate(date);
+  const handleChangeUpdateJog = (date) => setJogDateUpdate(date);
   const handleChange = ({ target: { value, name } }) => {
     setState({
       [name]: value,
@@ -104,9 +148,11 @@ export const RunList = () => {
     },
   };
 
+  console.log(userJogs);
+
   return (
     <main className="run-list-main">
-      <Modal isOpen={modalState} ariaHideApp={false} style={stylePreset}>
+      <Modal isOpen={modalStateCreate} ariaHideApp={false} style={stylePreset}>
         <form className="run-form">
           <div className="description">
             <p>Distance</p>
@@ -144,7 +190,53 @@ export const RunList = () => {
             alt=""
             onClick={(e) => {
               e.preventDefault();
-              setModalState(false);
+              setModalStateCreate(false);
+            }}
+          />
+        </form>
+      </Modal>
+      <Modal isOpen={modalStateUpdate} ariaHideApp={false} style={stylePreset}>
+        <form className="run-form">
+          <div className="description">
+            <p>Distance</p>
+            <p>Time</p>
+            <p>Date</p>
+          </div>
+          <div className="modal-input">
+            <input
+              className="distance-input"
+              name="distanceUpdate"
+              value={distanceUpdate}
+              onChange={handleChange}
+              type="text"
+            />
+            <input
+              className="time-input"
+              name="timeUpdate"
+              value={timeUpdate}
+              onChange={handleChange}
+              type="text"
+            />
+            <DatePicker
+              name="jogDateUpdate"
+              value={jogDateUpdate}
+              selected={jogDateUpdate}
+              onChange={handleChangeUpdateJog}
+            />
+            <button className="create-button" onClick={handleUpdateJog}>
+              Update
+            </button>
+            <button className="create-button" onClick={handleDeleteJog}>
+              Delete
+            </button>
+          </div>
+          <img
+            className="close-button"
+            src={CancelIcon}
+            alt=""
+            onClick={(e) => {
+              e.preventDefault();
+              setModalStateUpdate(false);
             }}
           />
         </form>
@@ -169,18 +261,25 @@ export const RunList = () => {
         {userJogs &&
           userJogs !== undefined &&
           userJogs.map((item) => (
-            <>
+            <div key={`${item._id}`}>
               <li className="run-list-item">
                 <div className="run-icon">
                   <img src={RunIcon} alt="" />
                 </div>
-                <div className="current-run-info">
+                <div
+                  className="current-run-info"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setState({ id: item._id });
+                    setModalStateUpdate(true);
+                  }}
+                >
                   <p>Speed</p>
                   <p>Distance: {item.distance}</p>
                   <p>Time: {item.time}</p>
                 </div>
               </li>
-            </>
+            </div>
           ))}
       </ul>
       <img
@@ -189,7 +288,7 @@ export const RunList = () => {
         alt=""
         onClick={(e) => {
           e.preventDefault();
-          setModalState(true);
+          setModalStateCreate(true);
         }}
       />
     </main>
