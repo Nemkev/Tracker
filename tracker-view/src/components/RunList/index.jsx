@@ -10,29 +10,6 @@ import axios from "axios";
 import "./index.scss";
 
 export const RunList = () => {
-  // console.log(localStorage.userId);
-  // console.log(localStorage.accessToken);
-  // const config = {
-  //   headers: { Authorization: `Bearer ${localStorage.accessToken}` },
-  // };
-  // const bodyParametrs = { userId: localStorage.userId };
-  useEffect(() => {
-    const getJogs = async () => {
-      const listOfJogs = await axios.post(
-        "http://localhost:4000/sync",
-        { userId: localStorage.userId },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.accessToken}`,
-          },
-        }
-      );
-
-      console.log(listOfJogs);
-      setState({ userJogs: listOfJogs.data.allThis });
-    };
-    getJogs();
-  }, []);
   const [{ distance, time, userJogs }, setState] = useReducer(
     (s, a) => ({
       ...s,
@@ -40,13 +17,48 @@ export const RunList = () => {
     }),
     { distance: "", time: "", userJogs: "" }
   );
-  console.log(userJogs);
 
   const [modalState, setModalState] = useState(false);
   const [startDate, setStartDate] = useState("");
+  const [filteredDate, setFilteredDate] = useState("");
   const [finishDate, setFinishDate] = useState("");
   const [jogDate, setJogDate] = useState("");
-
+  useEffect(() => {
+    if (startDate.length !== 0 && finishDate.length !== 0) {
+      const filterJogs = async () => {
+        const filteredJogs = await axios.post(
+          "http://localhost:4000/filterDate",
+          {
+            userId: localStorage.userId,
+            startDate,
+            finishDate,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.accessToken}`,
+            },
+          }
+        );
+        setState({ userJogs: filteredJogs.data });
+      };
+      filterJogs();
+    } else {
+      const getJogs = async () => {
+        const listOfJogs = await axios.post(
+          "http://localhost:4000/sync",
+          { userId: localStorage.userId },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.accessToken}`,
+            },
+          }
+        );
+        setState({ userJogs: listOfJogs.data.allThis });
+      };
+      getJogs();
+    }
+  }, [startDate, finishDate]);
+  console.log(startDate, 111, finishDate, 222);
   const handleCreateJog = async (e) => {
     e.preventDefault();
     axios.post(
@@ -122,22 +134,10 @@ export const RunList = () => {
               selected={jogDate}
               onChange={handleChangeJog}
             />
-            <button onClick={handleCreateJog}>Send</button>
+            <button className="create-button" onClick={handleCreateJog}>
+              Create
+            </button>
           </div>
-          {/* <div className="input-form-zone">
-            <div className="distance-input">
-              <p>Distance</p>
-              <input type="text" />
-            </div>
-            <div className="time-input">
-              <p>Time</p>
-              <input type="text" />
-            </div>
-            <div className="date-input">
-              <p>Date</p>
-              <input type="text" />
-            </div>
-          </div> */}
           <img
             className="close-button"
             src={CancelIcon}
