@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 
@@ -6,16 +6,41 @@ import "react-datepicker/dist/react-datepicker.css";
 import RunIcon from "../../assets/icon.svg";
 import AddIcon from "../../assets/add.svg";
 import CancelIcon from "../../assets/cancel.svg";
+import axios from "axios";
 import "./index.scss";
 
 export const RunList = () => {
-  const [{ distanse, time }, setState] = useReducer(
+  // console.log(localStorage.userId);
+  // console.log(localStorage.accessToken);
+  // const config = {
+  //   headers: { Authorization: `Bearer ${localStorage.accessToken}` },
+  // };
+  // const bodyParametrs = { userId: localStorage.userId };
+  useEffect(() => {
+    const getJogs = async () => {
+      const listOfJogs = await axios.post(
+        "http://localhost:4000/sync",
+        { userId: localStorage.userId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.accessToken}`,
+          },
+        }
+      );
+
+      console.log(listOfJogs);
+      setState({ userJogs: listOfJogs.data.allThis });
+    };
+    getJogs();
+  }, []);
+  const [{ distanse, time, userJogs }, setState] = useReducer(
     (s, a) => ({
       ...s,
       ...a,
     }),
-    { distanse: "", time: "" }
+    { distanse: "", time: "", userJogs: "" }
   );
+  console.log(userJogs);
 
   const [modalState, setModalState] = useState(false);
   const [startDate, setStartDate] = useState("");
@@ -98,7 +123,23 @@ export const RunList = () => {
         />
       </div>
       <ul className="run-info-list">
-        <li className="run-list-item">
+        {userJogs &&
+          userJogs !== undefined &&
+          userJogs.map((item) => (
+            <>
+              <li className="run-list-item">
+                <div className="run-icon">
+                  <img src={RunIcon} alt="" />
+                </div>
+                <div className="current-run-info">
+                  <p>Speed</p>
+                  <p>Distance: {item.distance}</p>
+                  <p>Time: {item.time}</p>
+                </div>
+              </li>
+            </>
+          ))}
+        {/* <li className="run-list-item">
           <div className="run-icon">
             <img src={RunIcon} alt="" />
           </div>
@@ -117,7 +158,7 @@ export const RunList = () => {
             <p>Distance</p>
             <p>Time</p>
           </div>
-        </li>
+        </li> */}
       </ul>
       <img
         className="add-button"
