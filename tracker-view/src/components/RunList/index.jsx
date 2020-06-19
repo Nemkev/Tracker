@@ -33,21 +33,46 @@ export const RunList = () => {
     };
     getJogs();
   }, []);
-  const [{ distanse, time, userJogs }, setState] = useReducer(
+  const [{ distance, time, userJogs }, setState] = useReducer(
     (s, a) => ({
       ...s,
       ...a,
     }),
-    { distanse: "", time: "", userJogs: "" }
+    { distance: "", time: "", userJogs: "" }
   );
   console.log(userJogs);
 
   const [modalState, setModalState] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [finishDate, setFinishDate] = useState("");
+  const [jogDate, setJogDate] = useState("");
+
+  const handleCreateJog = async (e) => {
+    e.preventDefault();
+    axios.post(
+      "http://localhost:4000/newJog",
+      {
+        userId: localStorage.userId,
+        time,
+        distance,
+        date: jogDate,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.accessToken}`,
+        },
+      }
+    );
+  };
 
   const handleChangeStart = (date) => setStartDate(date);
   const handleChangeFinish = (date) => setFinishDate(date);
+  const handleChangeJog = (date) => setJogDate(date);
+  const handleChange = ({ target: { value, name } }) => {
+    setState({
+      [name]: value,
+    });
+  };
 
   const stylePreset = {
     overlay: {
@@ -77,9 +102,27 @@ export const RunList = () => {
             <p>Date</p>
           </div>
           <div className="modal-input">
-            <input className="distance-input" type="text" />
-            <input className="time-input" type="text" />
-            <input className="date-input" type="text" />
+            <input
+              className="distance-input"
+              name="distance"
+              value={distance}
+              onChange={handleChange}
+              type="text"
+            />
+            <input
+              className="time-input"
+              name="time"
+              value={time}
+              onChange={handleChange}
+              type="text"
+            />
+            <DatePicker
+              name="jogDate"
+              value={jogDate}
+              selected={jogDate}
+              onChange={handleChangeJog}
+            />
+            <button onClick={handleCreateJog}>Send</button>
           </div>
           {/* <div className="input-form-zone">
             <div className="distance-input">
@@ -139,26 +182,6 @@ export const RunList = () => {
               </li>
             </>
           ))}
-        {/* <li className="run-list-item">
-          <div className="run-icon">
-            <img src={RunIcon} alt="" />
-          </div>
-          <div className="current-run-info">
-            <p>Speed</p>
-            <p>Distance</p>
-            <p>Time</p>
-          </div>
-        </li>
-        <li className="run-list-item">
-          <div className="run-icon">
-            <img src={RunIcon} alt="" />
-          </div>
-          <div className="current-run-info">
-            <p>Speed</p>
-            <p>Distance</p>
-            <p>Time</p>
-          </div>
-        </li> */}
       </ul>
       <img
         className="add-button"
