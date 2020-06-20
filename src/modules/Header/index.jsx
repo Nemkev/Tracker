@@ -23,11 +23,13 @@ export const Header = () => {
             <p className="menu-item ">About Us</p>
           </Link>
         </div>
-        <img
-          className="menu-icon"
-          src={currentUrl === "http://localhost:3000/nav" ? Cansel : Menu}
-          alt=""
-        />
+        <Link to="/nav" className="menu-icon">
+          <img
+            className="menu-icon"
+            src={currentUrl === "http://localhost:3000/nav" ? Cansel : Menu}
+            alt=""
+          />
+        </Link>
       </div>
     </header>
   );
