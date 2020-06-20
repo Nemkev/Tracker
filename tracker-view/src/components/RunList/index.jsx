@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import RunIcon from "../../assets/icon.svg";
 import AddIcon from "../../assets/add.svg";
 import CancelIcon from "../../assets/cancel.svg";
+import SadSmile from "../../assets/sad-rounded-square-emoticon.svg";
 import axios from "axios";
 import "./index.scss";
 
@@ -90,7 +91,7 @@ export const RunList = () => {
   const handleCreateJog = async (e) => {
     e.preventDefault();
     axios.post(
-      "http://localhost:4000/newJog",
+      "http://localhost:4000/v1/data/jog",
       {
         userId: localStorage.userId,
         time,
@@ -108,7 +109,7 @@ export const RunList = () => {
 
   const handleDeleteJog = async (e) => {
     e.preventDefault();
-    axios.delete("http://localhost:4000/deleteJog", {
+    axios.delete("http://localhost:4000/v1/data/jog", {
       headers: {
         Authorization: `Bearer ${localStorage.accessToken}`,
       },
@@ -121,7 +122,7 @@ export const RunList = () => {
   const handleUpdateJog = async (e) => {
     e.preventDefault();
     axios.put(
-      "http://localhost:4000/updateJog",
+      "http://localhost:4000/v1/data/jog",
       {
         userId: localStorage.userId,
         id,
@@ -166,17 +167,90 @@ export const RunList = () => {
     },
   };
 
-  console.log(userJogs);
+  if (userJogs && userJogs.length < 1) {
+    return (
+      <main className="run-list-main-empty">
+        <Modal
+          isOpen={modalStateCreate}
+          ariaHideApp={false}
+          style={stylePreset}
+        >
+          <form className="run-form">
+            <div className="modal-input">
+              <div className="input-block">
+                <p>Distance</p>
+                <input
+                  className="distance-input"
+                  name="distance"
+                  value={distance}
+                  onChange={handleChange}
+                  type="text"
+                />
+              </div>
+              <div className="input-block">
+                <p>Time</p>
+                <input
+                  className="time-input"
+                  name="time"
+                  value={time}
+                  onChange={handleChange}
+                  type="text"
+                />
+              </div>
+              <div className="input-block">
+                <p>Speed</p>
+                <input
+                  className="time-input"
+                  name="speed"
+                  value={speed}
+                  onChange={handleChange}
+                  type="text"
+                />
+              </div>
+              <div className="input-block">
+                <p>Date</p>
+                <DatePicker
+                  className="date-input"
+                  name="jogDate"
+                  value={jogDate}
+                  selected={jogDate}
+                  onChange={handleChangeJog}
+                />
+              </div>
+              <button className="create-button" onClick={handleCreateJog}>
+                Create
+              </button>
+            </div>
+            <img
+              className="close-button"
+              src={CancelIcon}
+              alt=""
+              onClick={(e) => {
+                e.preventDefault();
+                setModalStateCreate(false);
+              }}
+            />
+          </form>
+        </Modal>
+        <img src={SadSmile} alt="" />
+        <p className="empty-message">Nothing is there</p>
+        <button
+          className="create-button"
+          onClick={(e) => {
+            e.preventDefault();
+            setModalStateCreate(true);
+          }}
+        >
+          Create your first jog
+        </button>
+      </main>
+    );
+  }
 
   return (
     <main className="run-list-main">
       <Modal isOpen={modalStateCreate} ariaHideApp={false} style={stylePreset}>
         <form className="run-form">
-          {/* <div className="description">
-            <p>Distance</p>
-            <p>Time</p>
-            <p>Date</p>
-          </div> */}
           <div className="modal-input">
             <div className="input-block">
               <p>Distance</p>
@@ -235,11 +309,6 @@ export const RunList = () => {
       </Modal>
       <Modal isOpen={modalStateUpdate} ariaHideApp={false} style={stylePreset}>
         <form className="run-form">
-          {/* <div className="description">
-            <p>Distance</p>
-            <p>Time</p>
-            <p>Date</p>
-          </div> */}
           <div className="modal-input">
             <div className="input-block">
               <p>Distance</p>

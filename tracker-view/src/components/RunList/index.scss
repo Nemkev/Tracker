@@ -101,6 +101,18 @@
   cursor: pointer;
 }
 
+.run-list-main-empty {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-message {
+  margin-top: 20px;
+}
+
 @media screen and (max-width: 415px) {
   .run-list-item {
     border-bottom: 1px solid #eaeaea;
