@@ -11,7 +11,16 @@ import "./index.scss";
 
 export const RunList = () => {
   const [
-    { distance, time, userJogs, distanceUpdate, timeUpdate, id },
+    {
+      distance,
+      time,
+      userJogs,
+      distanceUpdate,
+      timeUpdate,
+      id,
+      speed,
+      speedUpdate,
+    },
     setState,
   ] = useReducer(
     (s, a) => ({
@@ -25,6 +34,8 @@ export const RunList = () => {
       distanceUpdate: "",
       timeUpdate: "",
       id: "",
+      speed: "",
+      speedUpdate: "",
     }
   );
 
@@ -85,6 +96,7 @@ export const RunList = () => {
         time,
         distance,
         date: jogDate,
+        speed,
       },
       {
         headers: {
@@ -116,6 +128,7 @@ export const RunList = () => {
         time: timeUpdate,
         distance: distanceUpdate,
         date: jogDateUpdate,
+        speed: speedUpdate,
       },
       {
         headers: {
@@ -186,6 +199,16 @@ export const RunList = () => {
               />
             </div>
             <div className="input-block">
+              <p>Speed</p>
+              <input
+                className="time-input"
+                name="speed"
+                value={speed}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
               <p>Date</p>
               <DatePicker
                 className="date-input"
@@ -234,6 +257,16 @@ export const RunList = () => {
                 className="time-input"
                 name="timeUpdate"
                 value={timeUpdate}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
+              <p>Speed</p>
+              <input
+                className="time-input"
+                name="speedUpdate"
+                value={speedUpdate}
                 onChange={handleChange}
                 type="text"
               />
@@ -302,7 +335,7 @@ export const RunList = () => {
                   }}
                 >
                   <p>Date: {item.date.slice(0, 10)}</p>
-                  <p>Speed</p>
+                  <p>Speed: {item.speed}</p>
                   <p>Distance: {item.distance}</p>
                   <p>Time: {item.time}</p>
                 </div>
