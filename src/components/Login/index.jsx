@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import BearFaceDesktop from "../../assets/bear-face.svg";
