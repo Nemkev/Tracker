@@ -145,3 +145,16 @@ const generateAccessToken = (user) => {
     expiresIn: "40min",
   });
 };
+
+export const testDelete = (req, res) => {
+  res.sendStatus(204);
+};
+export const testGet = (req, res) => {
+  res.sendStatus(200);
+};
+export const testPost = (req, res) => {
+  res.sendStatus(201);
+};
+export const testPut = (req, res) => {
+  res.sendStatus(200);
+};
