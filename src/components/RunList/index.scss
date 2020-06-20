@@ -1,0 +1,145 @@
+.run-list-main {
+  height: 100vh;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+}
+
+.run-list-item {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.current-run-info {
+  margin-left: 30px;
+}
+
+.date-from {
+  margin: 10px 10px;
+}
+
+.date-to {
+  margin: 10px 10px;
+}
+
+.add-button {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}
+
+.run-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.distance-input {
+  margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
+}
+
+.time-input {
+  margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
+}
+
+.input-block {
+  display: flex;
+  width: 300px;
+  max-width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.date-input {
+  margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
+}
+
+.modal-input {
+  display: flex;
+  margin-top: 100px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  margin: 6px;
+}
+
+.close-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.create-button {
+  margin-top: 30px;
+  color: #ffffff;
+  padding: 7px;
+  width: 25vw;
+  border-radius: 36px;
+  border: solid 3px #ffffff;
+  font-size: 25px;
+  background-color: #7ed321;
+  cursor: pointer;
+}
+
+.run-list-main-empty {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-message {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 415px) {
+  .run-list-item {
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .start-date {
+    width: 30vw;
+    border-radius: 36px;
+    border-color: #eaeaea;
+  }
+
+  .finish-date {
+    width: 30vw;
+    border-radius: 36px;
+    border-color: #eaeaea;
+  }
+
+  .input-block {
+    display: flex;
+    width: 300px;
+    max-width: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .create-button {
+    width: 200px;
+  }
+}

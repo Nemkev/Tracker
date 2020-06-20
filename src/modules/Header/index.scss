@@ -1,0 +1,40 @@
+.header {
+  background-color: #7ed321;
+}
+
+.logo-zone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px;
+}
+
+.menu-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu-item {
+  margin-right: 12px;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.link-desktop {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5em;
+}
+
+@media screen and (max-width: 415px) {
+  .menu-bar {
+    display: none;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+}
