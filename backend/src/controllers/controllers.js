@@ -33,7 +33,7 @@ export const createJog = async (req, res) => {
 export const deleteJog = async (req, res) => {
   try {
     const id = req.body.id;
-    await db.Jogs.findByIdAndDelete(id);
+    await db.Jogs.findByIdAndRemove(id);
     res.send(true);
   } catch (error) {
     console.log(error);
@@ -43,12 +43,18 @@ export const deleteJog = async (req, res) => {
 export const updateJog = async (req, res) => {
   try {
     const { id, date, time, distance, speed } = req.body;
-    const jog = await db.Jogs.findByIdAndUpdate(id, {
-      date,
-      time,
-      distance,
-      speed,
-    });
+    const jog = await db.Jogs.findByIdAndUpdate(
+      id,
+      {
+        date,
+        time,
+        distance,
+        speed,
+      },
+      {
+        new: true,
+      }
+    );
     res.send(jog);
   } catch (error) {
     console.log(error);
@@ -84,12 +90,18 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id, firstName, lastName, phone, email } = req.body;
-    const user = await db.User.findByIdAndUpdate(id, {
-      firstName,
-      lastName,
-      phone,
-      email,
-    });
+    const user = await db.User.findByIdAndUpdate(
+      id,
+      {
+        firstName,
+        lastName,
+        phone,
+        email,
+      },
+      {
+        new: true,
+      }
+    );
     res.send(user);
   } catch (error) {
     console.log(error);
