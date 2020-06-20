@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
 import axios from "axios";
 
-import BearFace from "../../assets/bear-face.svg";
+import BearFaceDesktop from "../../assets/bear-face.svg";
+import BearFaceMobile from "../../assets/bear-face-pink.svg";
 import "./index.scss";
 
 export const Login = () => {
@@ -28,8 +29,16 @@ export const Login = () => {
   return (
     <main className="placeholder">
       <div className="enter-zone">
-        <img src={BearFace} alt="" />
+        <img
+          src={
+            document.documentElement.clientWidth > 415
+              ? BearFaceDesktop
+              : BearFaceMobile
+          }
+          alt=""
+        />
         <input
+          className="email-input"
           name="email"
           value={email}
           placeholder="email"
@@ -37,6 +46,7 @@ export const Login = () => {
           onChange={handleChange}
         />
         <input
+          className="password-input"
           name="password"
           value={password}
           placeholder="password"

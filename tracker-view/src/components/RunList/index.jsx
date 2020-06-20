@@ -71,6 +71,11 @@ export const RunList = () => {
     }
   }, [startDate, finishDate]);
 
+  const logout = async (e) => {
+    e.preventDefault();
+    localStorage.removeItem("accessToken");
+  };
+
   const handleCreateJog = async (e) => {
     e.preventDefault();
     axios.post(
@@ -154,32 +159,42 @@ export const RunList = () => {
     <main className="run-list-main">
       <Modal isOpen={modalStateCreate} ariaHideApp={false} style={stylePreset}>
         <form className="run-form">
-          <div className="description">
+          {/* <div className="description">
             <p>Distance</p>
             <p>Time</p>
             <p>Date</p>
-          </div>
+          </div> */}
           <div className="modal-input">
-            <input
-              className="distance-input"
-              name="distance"
-              value={distance}
-              onChange={handleChange}
-              type="text"
-            />
-            <input
-              className="time-input"
-              name="time"
-              value={time}
-              onChange={handleChange}
-              type="text"
-            />
-            <DatePicker
-              name="jogDate"
-              value={jogDate}
-              selected={jogDate}
-              onChange={handleChangeJog}
-            />
+            <div className="input-block">
+              <p>Distance</p>
+              <input
+                className="distance-input"
+                name="distance"
+                value={distance}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
+              <p>Time</p>
+              <input
+                className="time-input"
+                name="time"
+                value={time}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
+              <p>Date</p>
+              <DatePicker
+                className="date-input"
+                name="jogDate"
+                value={jogDate}
+                selected={jogDate}
+                onChange={handleChangeJog}
+              />
+            </div>
             <button className="create-button" onClick={handleCreateJog}>
               Create
             </button>
@@ -197,32 +212,42 @@ export const RunList = () => {
       </Modal>
       <Modal isOpen={modalStateUpdate} ariaHideApp={false} style={stylePreset}>
         <form className="run-form">
-          <div className="description">
+          {/* <div className="description">
             <p>Distance</p>
             <p>Time</p>
             <p>Date</p>
-          </div>
+          </div> */}
           <div className="modal-input">
-            <input
-              className="distance-input"
-              name="distanceUpdate"
-              value={distanceUpdate}
-              onChange={handleChange}
-              type="text"
-            />
-            <input
-              className="time-input"
-              name="timeUpdate"
-              value={timeUpdate}
-              onChange={handleChange}
-              type="text"
-            />
-            <DatePicker
-              name="jogDateUpdate"
-              value={jogDateUpdate}
-              selected={jogDateUpdate}
-              onChange={handleChangeUpdateJog}
-            />
+            <div className="input-block">
+              <p>Distance</p>
+              <input
+                className="distance-input"
+                name="distanceUpdate"
+                value={distanceUpdate}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
+              <p>Time</p>
+              <input
+                className="time-input"
+                name="timeUpdate"
+                value={timeUpdate}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="input-block">
+              <p>Date</p>
+              <DatePicker
+                className="date-input"
+                name="jogDateUpdate"
+                value={jogDateUpdate}
+                selected={jogDateUpdate}
+                onChange={handleChangeUpdateJog}
+              />
+            </div>
             <button className="create-button" onClick={handleUpdateJog}>
               Update
             </button>
@@ -244,6 +269,7 @@ export const RunList = () => {
       <div className="filter-bar">
         <p className="date-from">Date from</p>
         <DatePicker
+          className="start-date"
           name="startDate"
           value={startDate}
           selected={startDate}
@@ -251,6 +277,7 @@ export const RunList = () => {
         />
         <p className="date-to">Date to</p>
         <DatePicker
+          className="finish-date"
           name="finishDate"
           value={finishDate}
           selected={finishDate}
@@ -274,6 +301,7 @@ export const RunList = () => {
                     setModalStateUpdate(true);
                   }}
                 >
+                  <p>Date: {item.date.slice(0, 10)}</p>
                   <p>Speed</p>
                   <p>Distance: {item.distance}</p>
                   <p>Time: {item.time}</p>

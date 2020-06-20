@@ -10,7 +10,8 @@
 }
 
 .run-list-item {
-  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,23 +40,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .distance-input {
   margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
 }
 
 .time-input {
   margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
+}
+
+.input-block {
+  display: flex;
+  width: 300px;
+  max-width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
 }
 
 .date-input {
   margin-top: 5px;
+  border-radius: 36px;
+  border-color: #eaeaea;
 }
 
 .modal-input {
   display: flex;
+  margin-top: 100px;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .description {
@@ -73,9 +93,41 @@
   margin-top: 30px;
   color: #ffffff;
   padding: 7px;
+  width: 25vw;
   border-radius: 36px;
   border: solid 3px #ffffff;
   font-size: 25px;
   background-color: #7ed321;
   cursor: pointer;
+}
+
+@media screen and (max-width: 415px) {
+  .run-list-item {
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .start-date {
+    width: 30vw;
+    border-radius: 36px;
+    border-color: #eaeaea;
+  }
+
+  .finish-date {
+    width: 30vw;
+    border-radius: 36px;
+    border-color: #eaeaea;
+  }
+
+  .input-block {
+    display: flex;
+    width: 300px;
+    max-width: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .create-button {
+    width: 200px;
+  }
 }

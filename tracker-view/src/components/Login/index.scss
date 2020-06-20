@@ -26,3 +26,37 @@
   background-color: #e990f9;
   cursor: pointer;
 }
+
+.email-input {
+  margin-top: 10px;
+  border-radius: 36px;
+  font-size: 25px;
+  border: solid 3px #ffffff;
+}
+
+.password-input {
+  margin-top: 10px;
+  border-radius: 36px;
+  font-size: 25px;
+  border: solid 3px #ffffff;
+}
+
+@media screen and (max-width: 415px) {
+  .enter-zone {
+    background-color: #ffffff;
+  }
+
+  .login-button {
+    color: #e990f9;
+    border: solid 3px #e990f9;
+    background-color: #ffffff;
+  }
+
+  .email-input {
+    border: solid 3px #e990f9;
+  }
+
+  .password-input {
+    border: solid 3px #e990f9;
+  }
+}
