@@ -17,10 +17,13 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://react-jog-client.herokuapp.com/login",
+        {
+          email,
+          password,
+        }
+      );
       localStorage.setItem("accessToken", `${response.data.accessToken}`);
       localStorage.setItem("userId", `${response.data.checkUser._id}`);
     } catch (error) {

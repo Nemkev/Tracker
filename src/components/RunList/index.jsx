@@ -51,7 +51,7 @@ export const RunList = () => {
     if (startDate.length !== 0 && finishDate.length !== 0) {
       const filterJogs = async () => {
         const filteredJogs = await axios.post(
-          "http://localhost:4000/filterDate",
+          "https://react-jog-client.herokuapp.com/filterDate",
           {
             userId: localStorage.userId,
             startDate,
@@ -69,7 +69,7 @@ export const RunList = () => {
     } else {
       const getJogs = async () => {
         const listOfJogs = await axios.post(
-          "http://localhost:4000/sync",
+          "https://react-jog-client.herokuapp.com/sync",
           { userId: localStorage.userId },
           {
             headers: {
@@ -91,7 +91,7 @@ export const RunList = () => {
   const handleCreateJog = async (e) => {
     e.preventDefault();
     axios.post(
-      "http://localhost:4000/v1/data/jog",
+      "https://react-jog-client.herokuapp.com/v1/data/jog",
       {
         userId: localStorage.userId,
         time,
@@ -109,7 +109,7 @@ export const RunList = () => {
 
   const handleDeleteJog = async (e) => {
     e.preventDefault();
-    axios.delete("http://localhost:4000/v1/data/jog", {
+    axios.delete("https://react-jog-client.herokuapp.com/v1/data/jog", {
       headers: {
         Authorization: `Bearer ${localStorage.accessToken}`,
       },
@@ -122,7 +122,7 @@ export const RunList = () => {
   const handleUpdateJog = async (e) => {
     e.preventDefault();
     axios.put(
-      "http://localhost:4000/v1/data/jog",
+      "https://react-jog-client.herokuapp.com/v1/data/jog",
       {
         userId: localStorage.userId,
         id,
