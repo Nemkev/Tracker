@@ -18,6 +18,10 @@ const Jogs = new Schema({
     type: Schema.Types.Date,
     required: true,
   },
+  speed: {
+    type: Schema.Types.String,
+    required: true,
+  },
 });
 
 export default mongoose.model("Jogs", Jogs);

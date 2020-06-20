@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import cors from "cors";
 import {
   Sync,
   createJog,
@@ -21,7 +22,9 @@ mongoose.connect("mongodb://localhost:27017/Evgeny", {
 const app = express();
 app.use(bodyParser());
 
-app.get("/sync", authenticateToken, Sync);
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
+app.post("/sync", authenticateToken, Sync);
 app.post("/newJog", authenticateToken, createJog);
 app.put("/updateJog", authenticateToken, updateJog);
 app.delete("/deleteJog", authenticateToken, deleteJog);
@@ -31,6 +34,6 @@ app.put("/updateUser", updateUser);
 app.delete("/deleteUser", deleteUser);
 app.post("/login", login);
 
-app.listen(3000, function () {
-  console.log("http://localhost:3000/");
+app.listen(4000, function () {
+  console.log("http://localhost:4000/");
 });
